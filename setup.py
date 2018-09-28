@@ -35,7 +35,7 @@ def get_version(pkg):
         return m.group(1)
     raise RuntimeError("Unable to find __version__ string in %s." % path)
 
-setup(name='python-asymcrypt',
+setup(name='asymcrypt',
       version=get_version('asymcrypt'),
       description='Super easy asymmetric encryption for python',
       long_description=long_description,

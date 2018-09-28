@@ -1,6 +1,6 @@
-================
-python-asymcrypt
-================
+=========
+asymcrypt
+=========
 
 Super easy asymmetric encryption for python
 
@@ -15,7 +15,7 @@ Installation
 
 With pip ::
 
-    pip install python-asymcrypt
+    pip install asymcrypt
 
 
 Usage

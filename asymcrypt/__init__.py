@@ -5,7 +5,7 @@ Created : 2018-09-18
 @author: Eric Lapouyade
 '''
 
-__version__ = '0.0.1'
+__version__ = '0.0.2'
 
 from Crypto.PublicKey import RSA
 from Crypto.Random import get_random_bytes
