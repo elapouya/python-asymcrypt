@@ -40,5 +40,5 @@ Decrypt data ::
 Passphrase
 ----------
 
-As an option, you can use `passphrase` option in each functions to generate encrypted keys
+As an option, you can use ``passphrase`` option in each functions to generate encrypted keys
 and read them when using encrypt/decrypt_data() functions
