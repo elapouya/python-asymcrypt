@@ -54,4 +54,7 @@ setup(name='asymcrypt',
       license='LGPL 2.1',
       packages=['asymcrypt'],
       install_requires=['pycryptodome'],
+      scripts=['scripts/asymdecrypt',
+               'scripts/asymencrypt',
+               'scripts/asymgenkeys'],
       zip_safe=False)

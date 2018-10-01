@@ -1,0 +1,27 @@
+#!/usr/bin/env python
+
+import argparse
+import asymcrypt
+import sys
+import os
+
+def main():
+    parser = argparse.ArgumentParser(description='Generate private/public keys pair')
+    parser.add_argument('-priv', dest='privfile', required=True,
+                        help='private key file')
+    parser.add_argument('-pub', dest='pubfile', required=True,
+                        help='public key file')
+    parser.add_argument('-p', '--passphrase', dest='passphrase',
+                        help='Passphrase to encrypt keys (optional)')
+    args = parser.parse_args()
+
+    try:
+        asymcrypt.generate_keys(args.privfile, args.pubfile, args.passphrase)
+        print('Done.')
+    except IOError:
+        print('*** Unable to create key files')
+        exit(1)
+
+
+if __name__ == '__main__':
+    main()

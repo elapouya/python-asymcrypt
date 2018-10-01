@@ -1,0 +1,56 @@
+#!/usr/bin/env python
+
+import argparse
+import asymcrypt
+import sys
+import os
+
+def main():
+    data = None
+
+    parser = argparse.ArgumentParser(description='Decrypt message with asymcrypt module')
+    parser.add_argument('-key', dest='keyfile', required=True,
+                        help='private key file')
+    parser.add_argument('-in', dest='infile',
+                        help='encrypted file (use stdin if not set)')
+    parser.add_argument('-out', dest='outfile',
+                        help='decrypted file (use stdout if not set)')
+    parser.add_argument('-b','--base64', dest='in_format', action='store_const',
+                        const='base64',
+                        help='decode base64 before decryption')
+    parser.add_argument('-p', '--passphrase', dest='passphrase',
+                        help='Passphrase to decrypt keys (optional)')
+    args = parser.parse_args()
+
+    if not os.path.exists(args.keyfile):
+        print('*** Error : specified keyfile must exist')
+        exit(1)
+    if args.infile and not os.path.exists(args.infile):
+        print('*** Error : specified encrypted file must exist')
+        exit(1)
+
+    if args.infile:
+        with open(args.infile) as fh:
+            data = fh.read()
+    else:
+        if hasattr(sys.stdin,'buffer'):
+            data = sys.stdin.buffer.read()
+        else:
+            data = sys.stdin.read()
+
+    try:
+        output = asymcrypt.decrypt_data(data, args.keyfile,
+                                        in_format=args.in_format,
+                                        passphrase=args.passphrase)
+    except ValueError as e:
+        print('*** ' + str(e))
+        exit(1)
+
+    if args.outfile:
+        with open(args.outfile,'wb') as fh:
+            fh.write(output)
+    else:
+        sys.stdout.write(output)
+
+if __name__ == '__main__':
+    main()
