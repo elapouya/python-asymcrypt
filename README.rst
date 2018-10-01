@@ -61,4 +61,4 @@ To decrypt ::
     asymdecrypt -k private_key.pem -in encrypted_file.enc -out dest_file.txt
 
 Note :  you may use option ``-b`` or ``--base64`` to encode/decode in base64
-and ``-p`` or  ``--passphrase`` to specify a passphrase en encrypt/decrypt keys
+and ``-p`` or  ``--passphrase`` to specify a passphrase to encrypt/decrypt keys
