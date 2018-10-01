@@ -5,7 +5,7 @@ Created : 2018-09-18
 @author: Eric Lapouyade
 '''
 
-__version__ = '0.0.3'
+__version__ = '0.0.4'
 
 from Crypto.PublicKey import RSA
 from Crypto.Random import get_random_bytes
@@ -64,7 +64,7 @@ def generate_keys(private_key_file='private_key.pem',
 
 
 def encrypt_data(data, public_key_file='public_key.pem', passphrase=None,
-                 out_format='base64'):
+                 out_format='bin'):
     """Encrypt data
 
     Args:
@@ -101,7 +101,7 @@ def encrypt_data(data, public_key_file='public_key.pem', passphrase=None,
 
 
 def decrypt_data(data, private_key_file='private_key.pem', passphrase=None,
-                 in_format='base64'):
+                 in_format='bin'):
     """Decrypt a file with given private key file
 
     Args:

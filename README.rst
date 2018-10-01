@@ -43,6 +43,14 @@ Passphrase
 As an option, you can use ``passphrase`` option in each functions to generate encrypted keys
 and read them when using encrypt/decrypt_data() functions
 
+
+Base64
+------
+
+By default, output/input are binary. Nevertheless, you can encode into base64 in ``encrypt_data()`` by using option ``out_format='base64'``
+or decode from base64 in ``decrypt_data()`` by using option ``in_format='base64'``
+
+
 Command line
 ------------
 
