@@ -70,3 +70,5 @@ To decrypt ::
 
 Note :  you may use option ``-b`` or ``--base64`` to encode/decode in base64
 and ``-p`` or  ``--passphrase`` to specify a passphrase to encrypt/decrypt keys
+
+Note 2 : If you do not specify ``-in`` or ``-out`` in above commands, the standard input/output will be used.
