@@ -1,3 +1,7 @@
+0.0.6 (2018-10-02)
+------------------
+- Keep track of orginal data type (unicode, str, bytes)
+
 0.0.4 (2018-10-01)
 ------------------
 - Add console commands
