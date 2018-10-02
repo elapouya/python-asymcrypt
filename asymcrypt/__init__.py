@@ -5,13 +5,19 @@ Created : 2018-09-18
 @author: Eric Lapouyade
 '''
 
-__version__ = '0.0.4'
+__version__ = '0.0.5'
+__author__ = 'Eric Lapouyade'
+__copyright__ = 'Copyright 2018, python-asymcrypt project'
+__credits__ = ['Eric Lapouyade']
+__license__ = 'LGPL'
+__maintainer__ = 'Eric Lapouyade'
+__status__ = 'Beta'
 
 from Crypto.PublicKey import RSA
 from Crypto.Random import get_random_bytes
 from Crypto.Cipher import AES, PKCS1_OAEP
 import base64
-
+import sys
 
 keys_cache = {}
 
@@ -64,7 +70,7 @@ def generate_keys(private_key_file='private_key.pem',
 
 
 def encrypt_data(data, public_key_file='public_key.pem', passphrase=None,
-                 out_format='bin'):
+                 out_format='bin', in_encoding='utf-8'):
     """Encrypt data
 
     Args:
@@ -72,6 +78,8 @@ def encrypt_data(data, public_key_file='public_key.pem', passphrase=None,
         public_key_file (str): the file path for the public key
         passphrase (str): The passphrase used when generating keys (optional)
         out_format (str): If 'base64' will encode into base64 after encryption
+        in_encoding (str): if not bytes (py3) or string (py2),
+                data will be encoded with that encoding (Default : utf-8)
 
     Returns:
         str: encrypted data
@@ -79,6 +87,13 @@ def encrypt_data(data, public_key_file='public_key.pem', passphrase=None,
     Note:
         If data is unicode, it will be 'utf-8' encoded
     """
+
+    # Check data type, encode to bytes(py3) or str(py2) if needed
+    has_been_encoded = b'N'
+    if ((sys.version_info.major == 2 and not isinstance(data, str)) or
+        (sys.version_info.major >= 3 and isinstance(data, str))):
+        data = data.encode(in_encoding)
+        has_been_encoded = b'Y'
 
     # read public key
     recipient_key = get_key(public_key_file, passphrase)
@@ -91,7 +106,7 @@ def encrypt_data(data, public_key_file='public_key.pem', passphrase=None,
     # Encrypt the data with the AES session key
     cipher_aes = AES.new(session_key, AES.MODE_EAX)
     ciphertext, tag = cipher_aes.encrypt_and_digest(data)
-    output = enc_session_key + cipher_aes.nonce + tag + ciphertext
+    output = enc_session_key + cipher_aes.nonce + tag + has_been_encoded + ciphertext
 
     # Encode into base64 if requested
     if out_format == 'base64':
@@ -101,7 +116,7 @@ def encrypt_data(data, public_key_file='public_key.pem', passphrase=None,
 
 
 def decrypt_data(data, private_key_file='private_key.pem', passphrase=None,
-                 in_format='bin'):
+                 in_format='bin', out_encoding='utf-8'):
     """Decrypt a file with given private key file
 
     Args:
@@ -109,9 +124,11 @@ def decrypt_data(data, private_key_file='private_key.pem', passphrase=None,
         private_key_file (str): the file path for the private key
         passphrase (str): The passphrase used when generating keys (optional)
         in_format (str): If 'base64' will decode base64 before decrypting
+        out_encoding (str): if original data before encryption has been encoded,
+            decode it with specified encoding (Default : utf-8)
 
     Returns:
-        str: decrypted data (utf-8 encoded if encrypted as unicode)
+        decrypted data
     """
 
     # Decode from base64 if requested
@@ -125,7 +142,8 @@ def decrypt_data(data, private_key_file='private_key.pem', passphrase=None,
     enc_session_key = data[:pksize]
     nonce = data[pksize:pksize + 16]
     tag = data[pksize + 16:pksize + 32]
-    ciphertext = data[pksize + 32:]
+    has_been_encoded = data[pksize + 32:pksize + 33]
+    ciphertext = data[pksize + 33:]
 
     # Decrypt the session key with the private RSA key
     cipher_rsa = PKCS1_OAEP.new(private_key)
@@ -134,5 +152,9 @@ def decrypt_data(data, private_key_file='private_key.pem', passphrase=None,
     # Decrypt the data with the AES session key
     cipher_aes = AES.new(session_key, AES.MODE_EAX, nonce)
     output = cipher_aes.decrypt_and_verify(ciphertext, tag)
+
+    # decode output if it was encoded at encryption time
+    if has_been_encoded == b'Y':
+        output = output.decode(out_encoding)
 
     return output
