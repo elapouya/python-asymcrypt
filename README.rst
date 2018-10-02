@@ -44,10 +44,10 @@ asymcrypt is using pycryptodome which is awaiting, for data, bytes for python3 o
 So it is preferable to use these types. Nevertheless, asymcrypt provides a type detection, it will keep
 the type you used at encryption time for the decryption time :
 
-For python 2, if you use unicode data for encryption, it will be automatically encoded as utf-8 before encryption and
+For python 2, if you use unicode data for encryption, it will be automatically encoded as utf-8 str before encryption and
 decoded back to unicode after decryption. If you use str data, no encoding/decoding will be done.
 
-For python 3, if you use str data for encryption, it will be automatically encoded as utf-8 before encryption and
+For python 3, if you use str data for encryption, it will be automatically encoded as utf-8 bytes before encryption and
 decoded back to str after decryption. If you use bytes data, no encoding/decoding will be done.
 
 
