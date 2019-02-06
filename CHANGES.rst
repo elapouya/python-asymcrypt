@@ -1,3 +1,7 @@
+0.0.8 (2018-10-02)
+------------------
+- fix asymdecrypt script
+
 0.0.6 (2018-10-02)
 ------------------
 - Keep track of orginal data type (unicode, str, bytes)
