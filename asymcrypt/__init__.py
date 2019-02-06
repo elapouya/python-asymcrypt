@@ -5,7 +5,7 @@ Created : 2018-09-18
 @author: Eric Lapouyade
 '''
 
-__version__ = '0.0.6'
+__version__ = '0.0.7'
 __author__ = 'Eric Lapouyade'
 __copyright__ = 'Copyright 2018, python-asymcrypt project'
 __credits__ = ['Eric Lapouyade']
@@ -154,7 +154,7 @@ def decrypt_data(data, private_key_file='private_key.pem', passphrase=None,
     output = cipher_aes.decrypt_and_verify(ciphertext, tag)
 
     # decode output if it was encoded at encryption time
-    if has_been_encoded == b'Y':
+    if out_encoding and has_been_encoded == b'Y':
         output = output.decode(out_encoding)
 
     return output

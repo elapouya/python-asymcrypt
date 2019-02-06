@@ -41,13 +41,14 @@ def main():
     try:
         output = asymcrypt.decrypt_data(data, args.keyfile,
                                         in_format=args.in_format,
-                                        passphrase=args.passphrase)
+                                        passphrase=args.passphrase,
+                                        out_encoding=None)
     except ValueError as e:
         print('*** ' + str(e))
         exit(1)
 
     if args.outfile:
-        with open(args.outfile,'wb') as fh:
+        with open(args.outfile, 'wb') as fh:
             fh.write(output)
     else:
         sys.stdout.write(output)
