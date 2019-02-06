@@ -30,7 +30,7 @@ def main():
         exit(1)
 
     if args.infile:
-        with open(args.infile) as fh:
+        with open(args.infile, 'rb') as fh:
             data = fh.read()
     else:
         if hasattr(sys.stdin,'buffer'):
