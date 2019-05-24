@@ -38,7 +38,7 @@ Decrypt data ::
 
 
 Unicode, Str, Bytes
-----------------------
+-------------------
 
 asymcrypt is using pycryptodome which is awaiting, for data, bytes for python3 or str for python2.
 So it is preferable to use these types. Nevertheless, asymcrypt provides a type detection, it will keep
