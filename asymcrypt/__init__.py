@@ -5,7 +5,7 @@ Created : 2018-09-18
 @author: Eric Lapouyade
 '''
 
-__version__ = '0.0.9'
+__version__ = '0.0.10'
 __author__ = 'Eric Lapouyade'
 __copyright__ = 'Copyright 2018, python-asymcrypt project'
 __credits__ = ['Eric Lapouyade']
